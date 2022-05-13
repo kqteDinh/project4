@@ -41,7 +41,7 @@ public class maze {
 	}
 	
 	//Creates the official maze using DFS
-	public void genMaze() {
+	public void genMaze() { // worked on this with peerConnections tutor
 		Stack<cellNode> cellStack = new Stack<cellNode>();
 		int total = size * size;
 		cellNode start = maze[0][0];
@@ -105,7 +105,7 @@ public class maze {
 	
 	//Checks if current cell have been visited in DFS
 	public void checkDFS(cellNode current) {
-		if(current.equals(new cellNode(size - 1, size -1))) {
+		if(current.equals(new cellNode(size - 1, size -1))) { // when it reaches the exit for the maze
 			end = true;
 			DFSnode.add(current);
 		}
@@ -125,7 +125,7 @@ public class maze {
 		current.endTime = time;
 	}
 	
-	//Prints the solution for the maze using DFS
+	//Prints the solution for the maze using DFS, will print out the string representation with the values of the coordinates
 	public String solutionDFS() {
 		DFS = true;
 		String string = this.toString();
@@ -141,7 +141,7 @@ public class maze {
 			}
 		}
 		Queue<cellNode> cellQueue = new LinkedList<cellNode>();
-		cellNode current = maze[0][0];
+		cellNode current = maze[0][0]; // start at the beginnning of the maze
 		int tempCount = 0;
 		current.visitedNodes = tempCount;
 		current.distance = 0;
