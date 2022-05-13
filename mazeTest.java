@@ -9,6 +9,6 @@ public class mazeTest {
 		maze example2 = new maze(4);
 		example1.DFS();
 		example2.BFS();
-		assertEquals(example1.toString(), example2.toString());
+		assertEquals(example1.solutionDFS(), example2.solutionBFS());
 	}
 }
