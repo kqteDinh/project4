@@ -92,7 +92,7 @@ public class maze {
 			for(int y = 0; y < size; y++){
 				maze[x][y].COLOR = colors.WHITE;	//Sets all cells in maze to white, cells are not explored
 			}
-			for(cellNode[] iterate: maze) {		//Starts traversing through maze to find end
+			for(cellNode[] iterate: maze) {		//Starts traversing through maze to find end, for every cellNode iterate inside the mazde
 				for(cellNode current: iterate) {
 					if(current.COLOR == colors.WHITE) {
 						checkDFS(current);
@@ -115,7 +115,7 @@ public class maze {
 		current.COLOR = colors.GREY;	//Color current cell grey, meaning the cell is not fully explored
 		time++;
 		current.startTime = time;
-		for(cellNode iterate: current.neighbor) { //for each current.neighbor node in the cellNode called iterate
+		for(cellNode iterate: current.neighbor) { //for each cellNode that is a current.neighbor where current is the current node
 			if(iterate.COLOR == colors.WHITE) { // if it has not been explored
 				checkDFS(iterate); // explore the node
 			}
