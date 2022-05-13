@@ -83,7 +83,7 @@ public class maze {
 		if(y+1 < size && maze[x][y+1].getWalls() && !maze[x][y+1].getVisited()){	//North
 			next.add(maze[x][y+1]);
 		}
-		return next;
+		return next; // this is an arraylist of nodes that are part of the path from the current cell
 	}
 	
 	//Colors all cells in the maze white and calls checkDFS to find the solution through the maze
@@ -115,9 +115,9 @@ public class maze {
 		current.COLOR = colors.GREY;	//Color current cell grey, meaning the cell is not fully explored
 		time++;
 		current.startTime = time;
-		for(cellNode iterate: current.neighbor) {
-			if(iterate.COLOR == colors.WHITE) {
-				checkDFS(iterate);
+		for(cellNode iterate: current.neighbor) { //for each current.neighbor node in the cellNode called iterate
+			if(iterate.COLOR == colors.WHITE) { // if it has not been explored
+				checkDFS(iterate); // explore the node
 			}
 		}
 		current.COLOR = colors.BLACK;	//Color current cell black, meaning the cell is fully explored
@@ -140,7 +140,7 @@ public class maze {
 				maze[x][y].COLOR = colors.WHITE;	//Sets all cells in the maze to white, cells are not explored
 			}
 		}
-		Queue<cellNode> cellQueue = new LinkedList<cellNode>();
+		Queue<cellNode> cellQueue = new LinkedList<cellNode>(); // create a queue FIFO
 		cellNode current = maze[0][0]; // start at the beginnning of the maze
 		int tempCount = 0;
 		current.visitedNodes = tempCount;
@@ -149,7 +149,7 @@ public class maze {
 		tempCount++;
 		while(cellQueue.size() != 0) {
 			current = cellQueue.remove();
-			if(current.x == size - 1 && current.y == size -1) {
+			if(current.x == size - 1 && current.y == size -1) { // at the end of the maze ( bottom right corner)
 				end = true;
 			}
 			for(cellNode iterate: current.neighbor) {		//Changes color of cell depending on whether it was visited or not
@@ -184,45 +184,45 @@ public class maze {
 	//A toString that builds the maze to look like the expected
 	@Override
 	public String toString() {
-		String string = "";
-		String[][] createMaze = new String[1 + (size * 2)][1 + (size * 2)];
+		String string = ""; // created empty string
+		String[][] createMaze = new String[1 + (size * 2)][1 + (size * 2)]; //we have the string this size in order to avoid array overflow
 
 		for(int x = 0; x < createMaze.length; x++) {
 			for (int y = 0; y < createMaze.length; y++) {
 				cellNode current = null;
 				if (x % 2 == 1 && y % 2 == 1) {
 					current = maze[x / 2][y / 2];
-				}
-				if((x == 0 && y == 1) || (x == size * 2 && y == (size * 2) - 1)) {
-						createMaze[x][y] = " ";
+				} // FROM HERE CREATES THE INSIDE OF THE MAZE, SO THE CORNERS AND WALLS
+				if((x == 0 && y == 1) || (x == size * 2 && y == (size * 2) - 1)) { 
+						createMaze[x][y] = " "; // entry of the maze, or exit of the maze
 				}
 				else if(createMaze[x][y] == null && x % 2 == 0 && y % 2 == 0) {
-					createMaze[x][y] = "+";
+					createMaze[x][y] = "+"; // corner
 				}
 				else if(x == 0 || x == createMaze.length - 1) {
-					createMaze[x][y] = "--";
+					createMaze[x][y] = "--"; // this is basically any wall, second parameter makes sure we do not write past the outer wall of the maze
 				}
 				else if(x % 2 == 1 && (y == 0 || y == createMaze[0].length - 1)) {
-					createMaze[x][y] = "|";
+					createMaze[x][y] = "|"; // this creates the downwards wall, as long as it doesnt go past the length
 				}
-				else if(current != null) {
-					if (current.west) {
+				else if(current != null) { // 	THIS CREATES THE ENTIRE BORDER OF THE MAZE WITHOUT THE ROADS INSIDE OR THE CORNERS
+					if (current.west) { // if we are at the left wall
 						createMaze[x][y - 1] = "|";
 					}
 					else {
-						createMaze[x][y - 1] = " ";
+						createMaze[x][y - 1] = " "; // just a normal space since its inside the maze
 					}
 					if(current.east) {
-						createMaze[x][y + 1] = "|";
+						createMaze[x][y + 1] = "|"; // if we're at the right wall
 					}
 					else {
 						createMaze[x][y + 1] = " ";
 					}
 					if(current.north) {
-						createMaze[x - 1][y] = "--";
+						createMaze[x - 1][y] = "--";// if we're at the top
 					}
 					if(current.south) {
-						createMaze[x + 1][y] = "--";
+						createMaze[x + 1][y] = "--";// if we're at the bottom
 					}
 					
 					Integer begin = (Integer)current.startTime;
@@ -234,7 +234,7 @@ public class maze {
 						createMaze[x][y] = begin.toString() + "";
 					}
 					else if(shortDFS && DFSnode.contains(current)) {
-						createMaze[x][y] = "##";
+						createMaze[x][y] = "##"; // supposed to map out the direction of the solution for the maze
 					}
 					else if(BFS && node < 10 && BFSnode.contains(current)) {
 						createMaze[x][y] = node.toString() + " ";
@@ -260,6 +260,6 @@ public class maze {
 			}
 			string += "\n";
 		}
-		return string;
+		return string; // returns the representation of the solved maze for bfs and dfs
 	}
 }
