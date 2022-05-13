@@ -105,9 +105,9 @@ public class maze {
 	
 	//Checks if current cell have been visited in DFS
 	public void checkDFS(cellNode current) {
-		if(current.equals(new cellNode(size - 1, size -1))) { // when it reaches the exit for the maze
+		if(current.equals(new cellNode(size - 1, size -1))) { 	//when it reaches the exit for the maze
 			end = true;
-			DFSnode.add(current);
+			DFSnode.add(current);				//Adds coordinate to an array
 		}
 		if(!end) {
 			DFSnode.add(current);
@@ -154,23 +154,23 @@ public class maze {
 			}
 			for(cellNode iterate: current.neighbor) {		//Changes color of cell depending on whether it was visited or not
 				if(iterate.COLOR == colors.WHITE) {
-					iterate.COLOR = colors.GREY;
-					iterate.visitedNodes = tempCount;
-					tempCount++;
-					iterate.distance = current.distance + 1;
+					iterate.COLOR = colors.GREY;		//Currently visiting cell
+					iterate.visitedNodes = tempCount;	//Sets current cell with count
+					tempCount++;				//Increase count number
+					iterate.distance = current.distance + 1;//Choose direciton from current cell
 					iterate.next = current;
-					if(iterate.x == size - 1 && iterate.y == size -1) {
+					if(iterate.x == size - 1 && iterate.y == size -1) {	//Reach the end of the maze
 						end = true;
 					}
-					if(!end) {
-						BFSnode.add(iterate);
+					if(!end) {				//Didn't reach the end
+						BFSnode.add(iterate);		//Add the coordinate to an array
 						}
-					cellQueue.add(iterate);
+					cellQueue.add(iterate);			//Add the coordinate to the queue and run white loop
 					}
 				}
-			current.COLOR = colors.BLACK;
+			current.COLOR = colors.BLACK;				//Cell has been visited
 		}
-		BFSnode.add(maze[size-1][size-1]);
+		BFSnode.add(maze[size-1][size-1]);				//Adds the final destination of the maze
 	}
 	
 	//Prints the solution for the maze using BFS
