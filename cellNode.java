@@ -24,7 +24,7 @@ public class cellNode {
 	}
 	
 	public boolean getVisited() {
-		return visited;
+		return visited; // returns teur or false based on if the room was visited
 	}
 	
 	public boolean getWalls() {
@@ -46,7 +46,7 @@ public class cellNode {
 	
 	@Override
 	public String toString() {
-		return "(" + x + ", " + y + ")";
+		return "(" + x + ", " + y + ")"; // returns the coordinates
 	}
 	
 	//Breaks down wall in the maze
