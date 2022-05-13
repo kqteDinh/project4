@@ -52,10 +52,10 @@ public class cellNode {
 	//Breaks down wall in the maze
 	public void breakWall(cellNode current) {
 		if(current.x == x - 1 && current.y == y) {	//North
-			north = false;
-			current.south = false;
-			neighbor.add(current);
-			current.neighbor.add(this);
+			north = false;				//
+			current.south = false;			//
+			neighbor.add(current);			//Add coorindates to an arraylist
+			current.neighbor.add(this);		//
 		}
 		if(current.x == x + 1 && current.y == y) {	//South
 			south = false;
