@@ -125,6 +125,14 @@ public class maze {
 		current.endTime = time;
 	}
 	
+	//Prints the solution for the maze using DFS
+	public String solutionDFS() {
+		DFS = true;
+		String string = this.toString();
+		DFS = false;
+		return string;
+	}
+	
 	//Using BFS to traverse through the maze
 	public void BFS() {
 		for(int x = 0; x < size; x++) {
@@ -141,6 +149,9 @@ public class maze {
 		tempCount++;
 		while(cellQueue.size() != 0) {
 			current = cellQueue.remove();
+			if(current.x == size - 1 && current.y == size -1) {
+				end = true;
+			}
 			for(cellNode iterate: current.neighbor) {		//Changes color of cell depending on whether it was visited or not
 				if(iterate.COLOR == colors.WHITE) {
 					iterate.COLOR = colors.GREY;
@@ -160,6 +171,14 @@ public class maze {
 			current.COLOR = colors.BLACK;
 		}
 		BFSnode.add(maze[size-1][size-1]);
+	}
+	
+	//Prints the solution for the maze using BFS
+	public String solutionBFS() {
+		BFS = true;
+		String string = this.toString();
+		BFS = false;
+		return string;
 	}
 	
 	//A toString that builds the maze to look like the expected
