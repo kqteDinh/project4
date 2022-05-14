@@ -207,6 +207,7 @@ public class maze {
 				}
 				else if(x % 2 == 1 && (y == 0 || y == createMaze[0].length - 1)) {
 					createMaze[x][y] = "|"; // this creates the downwards wall, as long as it doesnt go past the length
+					// starting index at (1,1) because we have the wall at (0,1) and the corner at (0,0)
 				}
 				else if(current != null) { // 	THIS CREATES THE ENTIRE BORDER OF THE MAZE WITHOUT THE ROADS INSIDE OR THE CORNERS
 					if (current.west) { // if we are at the left wall
