@@ -42,25 +42,26 @@ public class maze {
 	
 	//Creates the official maze using DFS
 	public void genMaze() { // worked on this with peerConnections tutor
-		Stack<cellNode> cellStack = new Stack<cellNode>();
+		Stack<cellNode> cellStack = new Stack<cellNode>(); // stores list of cell locations
 		int total = size * size;
 		cellNode start = maze[0][0];
 		start.setVisited();
 		int visitCount = 1;
 		
 		while(visitCount < total) {		//Creating the path of the maze by tearing down walls
-			ArrayList<cellNode> next = directions(start);
-			if(!next.isEmpty()) {
-				int cell = random.nextInt(next.size());
-				cellNode current = next.get(cell);
-				start.breakWall(current);
-				cellStack.push(start);
-				start = current;
-				start.setVisited();
+			ArrayList<cellNode> next = directions(start); // this is an arraylist of nodes that are part of the path from the current cell
+			if(!next.isEmpty()) { // if one or more neighbors with walls intact are found
+				int cell = random.nextInt(next.size()); //pick one at random to knock down
+				cellNode current = next.get(cell); // assign that random cell to the one that is to have the wall knocked down
+				start.breakWall(current); //break the wall between the chosen random room and the current cell
+				cellStack.push(start);// push current cell location on cellStack
+				start = current; // set the new starting point to the current cell
+				start.setVisited(); // set it as visited and start over
 				visitCount++;
 			}
-			else if(!cellStack.isEmpty()) {
-				start = cellStack.pop();
+			else if(!cellStack.isEmpty()) { // if the cellstack is full and we do not find neighbors with walls intact
+				start = cellStack.pop(); // since the stack is LIFO, we can pop the most recent entry off of it
+				// this assignment makes the most recent entry the current cell
 			}
 		}
 	}
@@ -71,8 +72,10 @@ public class maze {
 		int x = current.x;
 		int y = current.y;
 		
-		if(x-1 >= 0 && maze[x-1][y].getWalls() && !maze[x-1][y].getVisited()){		//West
-			next.add(maze[x-1][y]);
+		if(x-1 >= 0 && maze[x-1][y].getWalls() && !maze[x-1][y].getVisited()){		
+			//West; if neighbor to the west's arraylist with neighbors is empty(means wall isnt broken), 
+			//and it has not been visited yet
+			next.add(maze[x-1][y]); // add neighbor to arraylist
 		}
 		if(x+1 < size && maze[x+1][y].getWalls() && !maze[x+1][y].getVisited()){	//East
 			next.add(maze[x+1][y]);
@@ -94,8 +97,8 @@ public class maze {
 			}
 			for(cellNode[] iterate: maze) {		//Starts traversing through maze to find end, for every cellNode iterate inside the mazde
 				for(cellNode current: iterate) {
-					if(current.COLOR == colors.WHITE) {
-						checkDFS(current);
+					if(current.COLOR == colors.WHITE) { // if the cell has not been explored
+						checkDFS(current); // explore the cell
 					}
 				}
 			}
@@ -109,13 +112,13 @@ public class maze {
 			end = true;
 			DFSnode.add(current);				//Adds coordinate to an array
 		}
-		if(!end) {
-			DFSnode.add(current);
+		if(!end) { // if we haven't reached the end
+			DFSnode.add(current); // add the current coordinate to the array
 		}
 		current.COLOR = colors.GREY;	//Color current cell grey, meaning the cell is not fully explored
 		time++;
 		current.startTime = time;
-		for(cellNode iterate: current.neighbor) { //for each cellNode that is a current.neighbor where current is the current node
+		for(cellNode iterate: current.neighbor) { //for all neighbors of the current node
 			if(iterate.COLOR == colors.WHITE) { // if it has not been explored
 				checkDFS(iterate); // explore the node
 			}
@@ -145,7 +148,7 @@ public class maze {
 		int tempCount = 0;
 		current.visitedNodes = tempCount;
 		current.distance = 0;
-		current.COLOR = colors.GREY;
+		current.COLOR = colors.GREY; // because we are currently visiting the beginnin of the maze
 		tempCount++;
 		while(cellQueue.size() != 0) {
 			current = cellQueue.remove();
@@ -153,7 +156,7 @@ public class maze {
 				end = true;
 			}
 			for(cellNode iterate: current.neighbor) {		//Changes color of cell depending on whether it was visited or not
-				if(iterate.COLOR == colors.WHITE) {
+				if(iterate.COLOR == colors.WHITE) { // if cell hasn't been visited
 					iterate.COLOR = colors.GREY;		//Currently visiting cell
 					iterate.visitedNodes = tempCount;	//Sets current cell with count
 					tempCount++;				//Increase count number
@@ -185,7 +188,7 @@ public class maze {
 	@Override
 	public String toString() {
 		String string = ""; // created empty string
-		String[][] createMaze = new String[1 + (size * 2)][1 + (size * 2)]; //we have the string this size in order to avoid array overflow
+		String[][] createMaze = new String[1 + (size * 2)][1 + (size * 2)]; //we have the string this size because we also have to print the walls, in addition to the rooms
 
 		for(int x = 0; x < createMaze.length; x++) {
 			for (int y = 0; y < createMaze.length; y++) {
@@ -197,7 +200,7 @@ public class maze {
 						createMaze[x][y] = " "; // entry of the maze, or exit of the maze
 				}
 				else if(createMaze[x][y] == null && x % 2 == 0 && y % 2 == 0) {
-					createMaze[x][y] = "+"; // corner
+					createMaze[x][y] = "+"; // corner starting index at (1,1) since corner is at (0,0)
 				}
 				else if(x == 0 || x == createMaze.length - 1) {
 					createMaze[x][y] = "--"; // this is basically any wall, second parameter makes sure we do not write past the outer wall of the maze
