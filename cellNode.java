@@ -13,14 +13,14 @@ public class cellNode {
 	
 	//Constructor for the cells in the maze
 	public cellNode(int x, int y) {
-		neighbor = new ArrayList<cellNode>();
-		this.x = x;
-		this.y = y;
-		north = south = east = west = true;
-		COLOR = colors.WHITE;
-		visitedNodes = distance = startTime = endTime = 0;
-		next = null;
-		visited = false;
+		neighbor = new ArrayList<cellNode>();				//An arraylist to hold coordinates after breaking wall
+		this.x = x;							//X coordinate
+		this.y = y;							//Y coordinate
+		north = south = east = west = true;				//Directions for walls
+		COLOR = colors.WHITE;						//Set cells to not visited
+		visitedNodes = distance = startTime = endTime = 0;		//Keeping track of cells visited, distance traveled, and time
+		next = null;							//Goes to next cell
+		visited = false;						//Determines if a cell is visited or not
 	}
 	
 	public boolean getVisited() {
