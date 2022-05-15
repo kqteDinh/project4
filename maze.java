@@ -193,19 +193,19 @@ public class maze {
 		for(int x = 0; x < createMaze.length; x++) {
 			for (int y = 0; y < createMaze.length; y++) {
 				cellNode current = null;
-				if (x % 2 == 1 && y % 2 == 1) {	
+				if (x % 2 == 1 && y % 2 == 1) {
 					current = maze[x / 2][y / 2];
 				} // FROM HERE CREATES THE INSIDE OF THE MAZE, SO THE CORNERS AND WALLS
-				if((x == 0 && y == 1) || (x == size * 2 && y == (size * 2) - 1)) {		//x is 0 and y is 1 (start) or x is 8 and y = 7 (end)
+				if((x == 0 && y == 1) || (x == size * 2 && y == (size * 2) - 1)) { 
 						createMaze[x][y] = " "; // entry of the maze, or exit of the maze
 				}
-				else if(createMaze[x][y] == null && x % 2 == 0 && y % 2 == 0) {			//if current cell is empty and x,y are even, put +
-					createMaze[x][y] = "+"; // corner starting index at (1,1) since corner is at (0,0)
+				else if(createMaze[x][y] == null && x % 2 == 0 && y % 2 == 0) {
+					createMaze[x][y] = "+"; // corner starting index at (0,1) since corner is at (0,0)
 				}
-				else if(x == 0 || x == createMaze.length - 1) {					//x is 0 or x is 7
+				else if(x == 0 || x == createMaze.length - 1) {
 					createMaze[x][y] = "--"; // this is basically any wall, second parameter makes sure we do not write past the outer wall of the maze
 				}
-				else if(x % 2 == 1 && (y == 0 || y == createMaze[0].length - 1)) {		//x is odd and either y is 0 or y is 7
+				else if(x % 2 == 1 && (y == 0 || y == createMaze[0].length - 1)) {
 					createMaze[x][y] = "|"; // this creates the downwards wall, as long as it doesnt go past the length
 					// starting index at (1,1) because we have the wall at (0,1) and the corner at (0,0)
 				}
